@@ -1,0 +1,40 @@
+{
+  "type": "header",
+  "suite": "rubric-eval-with-letta-judge",
+  "config": {
+    "target": {
+      "kind": "letta_agent",
+      "base_url": "https://api.letta.com/",
+      "api_key": null,
+      "timeout": 300.0,
+      "project_id": null,
+      "max_retries": 0,
+      "model_configs": null,
+      "model_handles": null,
+      "agent_id": null,
+      "agent_file": "/Users/cameron/letta/letta-evals/demo/1-agentfile/qa_agent.af",
+      "agent_script": null
+    },
+    "gate": {
+      "metric": "avg_score",
+      "metric_key": "quality",
+      "op": "gte",
+      "value": 0.7,
+      "pass_op": null,
+      "pass_value": null
+    },
+    "graders": {
+      "quality": {
+        "kind": "letta_judge",
+        "display_name": null,
+        "extractor": "last_assistant",
+        "extractor_config": null,
+        "prompt": "Evaluate the agent's response about capital cities based on these criteria:\n\n1. Accuracy (0.5 weight) - Is the capital city factually correct?\n2. Completeness (0.3 weight) - Does it address why the city is a capital?\n3. Length (0.2 weight) - Is it 2-3 sentences as requested in the input?\n\nScoring Guidelines:\n- 1.0: Excellent - accurate capital, explains why it's the capital, proper length\n- 0.7-0.9: Good - correct capital, mostly complete explanation\n- 0.4-0.6: Fair - correct capital but incomplete explanation or wrong length\n- 0.0-0.3: Poor - incorrect capital or missing key information\n\nUse the submit_grade tool to submit your evaluation with a score between 0.0 and 1.0.\n",
+        "prompt_path": "/Users/cameron/letta/letta-evals/demo/3-rubric/rubric.txt",
+        "agent_file": null,
+        "judge_tool_name": "submit_grade",
+        "rubric_vars": null
+      }
+    }
+  }
+}

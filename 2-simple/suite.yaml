@@ -1,0 +1,16 @@
+name: simple-qa-eval
+description: Simple single-turn Q&A eval using last_assistant extractor and tool grader
+dataset: dataset.csv
+target:
+  kind: letta_agent
+  agent_file: ../1-agentfile/qa_agent.af
+  base_url: https://api.letta.com/
+graders:
+  contains_check:
+    kind: tool
+    function: contains
+    extractor: last_assistant
+gate:
+  metric_key: contains_check
+  op: gte
+  value: 0.67

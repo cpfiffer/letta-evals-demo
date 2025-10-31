@@ -1,0 +1,2 @@
+{"input": ["Remember that my favorite European capital is Paris.", "What's my favorite European capital?"], "ground_truth": "Paris"}
+{"input": ["Remember that my favorite Asian capital is Tokyo.", "What's my favorite Asian capital?"], "ground_truth": "Tokyo"}

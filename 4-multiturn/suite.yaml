@@ -1,0 +1,18 @@
+name: multiturn-memory-eval
+description: Multi-turn conversation eval checking memory updates
+dataset: dataset.jsonl
+target:
+  kind: letta_agent
+  agent_file: memory_agent.af
+  base_url: https://api.letta.com/
+graders:
+  memory_check:
+    kind: tool
+    function: contains
+    extractor: memory_block
+    extractor_config:
+      block_label: "user_preferences"
+gate:
+  metric_key: memory_check
+  op: gte
+  value: 1.0

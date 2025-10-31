@@ -1,0 +1,36 @@
+{
+  "type": "header",
+  "suite": "simple-qa-eval",
+  "config": {
+    "target": {
+      "kind": "letta_agent",
+      "base_url": "https://api.letta.com/",
+      "api_key": null,
+      "timeout": 300.0,
+      "project_id": null,
+      "max_retries": 0,
+      "model_configs": null,
+      "model_handles": null,
+      "agent_id": null,
+      "agent_file": "/Users/cameron/letta/letta-evals/demo/1-agentfile/qa_agent.af",
+      "agent_script": null
+    },
+    "gate": {
+      "metric": "avg_score",
+      "metric_key": "contains_check",
+      "op": "gte",
+      "value": 0.67,
+      "pass_op": null,
+      "pass_value": null
+    },
+    "graders": {
+      "contains_check": {
+        "kind": "tool",
+        "display_name": null,
+        "extractor": "last_assistant",
+        "extractor_config": null,
+        "function": "contains"
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+Evaluate the agent's response about capital cities based on these criteria:
+
+1. Accuracy (0.5 weight) - Is the capital city factually correct?
+2. Completeness (0.3 weight) - Does it address why the city is a capital?
+3. Length (0.2 weight) - Is it 2-3 sentences as requested in the input?
+
+Scoring Guidelines:
+- 1.0: Excellent - accurate capital, explains why it's the capital, proper length
+- 0.7-0.9: Good - correct capital, mostly complete explanation
+- 0.4-0.6: Fair - correct capital but incomplete explanation or wrong length
+- 0.0-0.3: Poor - incorrect capital or missing key information
+
+Use the submit_grade tool to submit your evaluation with a score between 0.0 and 1.0.

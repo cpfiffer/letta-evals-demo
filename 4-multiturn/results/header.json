@@ -1,0 +1,38 @@
+{
+  "type": "header",
+  "suite": "multiturn-memory-eval",
+  "config": {
+    "target": {
+      "kind": "letta_agent",
+      "base_url": "https://api.letta.com/",
+      "api_key": null,
+      "timeout": 300.0,
+      "project_id": null,
+      "max_retries": 0,
+      "model_configs": null,
+      "model_handles": null,
+      "agent_id": null,
+      "agent_file": "/Users/cameron/letta/letta-evals/demo/4-multiturn/memory_agent.af",
+      "agent_script": null
+    },
+    "gate": {
+      "metric": "avg_score",
+      "metric_key": "memory_check",
+      "op": "gte",
+      "value": 1.0,
+      "pass_op": null,
+      "pass_value": null
+    },
+    "graders": {
+      "memory_check": {
+        "kind": "tool",
+        "display_name": null,
+        "extractor": "memory_block",
+        "extractor_config": {
+          "block_label": "user_preferences"
+        },
+        "function": "contains"
+      }
+    }
+  }
+}

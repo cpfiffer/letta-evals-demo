@@ -1,0 +1,25 @@
+{
+  "type": "summary",
+  "metrics": {
+    "total": 3,
+    "total_attempted": 3,
+    "avg_score_attempted": 1.0,
+    "avg_score_total": 1.0,
+    "passed_attempts": 3,
+    "failed_attempts": 0,
+    "per_model": null,
+    "by_metric": {
+      "contains_check": {
+        "avg_score_attempted": 1.0,
+        "avg_score_total": 1.0,
+        "pass_rate": 100.0,
+        "passed_attempts": 3,
+        "failed_attempts": 0
+      }
+    },
+    "metrics": {
+      "contains_check": 100.0
+    }
+  },
+  "gates_passed": true
+}
