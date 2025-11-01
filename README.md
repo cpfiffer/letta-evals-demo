@@ -1,162 +1,128 @@
-# Letta Evals Intro Video Script
+# Letta Evals Demo
 
-## Video Outline
+This repository contains example code and demos for [Letta Evals](https://github.com/letta-ai/letta-evals), a testing framework for stateful AI agents. These examples accompany the [Letta Evals introduction video](https://youtube.com/@lettalabs).
 
-### 1. Introduction (30 seconds)
-- Introduce yourself
-- What is Letta Evals?
-  - Framework for evaluating AI agents built with Letta
-  - Systematic testing for stateful AI agents
-  - Test memory, tool usage, multi-turn conversations, state evolution
+## What is Letta Evals?
 
-### 2. Core Concepts (1 minute)
-Explain the evaluation flow:
-**Dataset → Target (Agent) → Extractor → Grader → Gate → Result**
+Letta Evals is a testing framework designed for evaluating stateful AI agents built with Letta. It enables you to:
 
-- **Dataset**: Test cases with inputs and expected outputs (CSV or JSONL)
-- **Target**: The agent to test (specified by agent file or agent ID)
-- **Extractor**: Pulls out content from agent responses (last message, memory, etc.)
+- Test whether agents use tools correctly
+- Verify agents provide accurate answers
+- Check if agents remember information across conversations
+- Build CI/CD pipelines for agent development
+- Run benchmarks and leaderboards at scale
+
+Letta Evals helps you build production-quality agents by providing systematic evaluation capabilities similar to continuous integration testing.
+
+## Core Concepts
+
+Letta Evals uses an evaluation pipeline:
+
+**Dataset → Target → Extractor → Grader → Gate → Result**
+
+- **Dataset**: Test cases with inputs and expected outputs (CSV or JSONL format)
+- **Target**: The agent being evaluated (specified by agent file or agent ID)
+- **Extractor**: Extracts specific content from agent responses (messages, memory blocks, tool calls)
 - **Grader**: Scores the extracted content (tool-based or LLM-based)
-- **Gate**: Pass/fail threshold for the entire evaluation
-- **Result**: Metrics and pass/fail status
+- **Gate**: Pass/fail threshold that throws an error if evaluation fails
+- **Result**: Metrics including average score, standard deviation, and error counts
 
-### 3. Agent Files (.af) (1 minute)
-**Demo**: Show `1-agentfile/qa_agent.af`
+## What's in This Repo
 
-- Agent files contain everything to define a Letta agent
-- JSON format with:
-  - Agent configuration (name, description, system prompt)
-  - LLM config (model, temperature, etc.)
-  - Embedding config
-  - Tools (custom functions)
-  - Memory blocks
-  - Initial messages
-- Portable and reusable
-- Used in evals with `agent_file: qa_agent.af`
+This repository contains four progressive examples demonstrating Letta Evals capabilities:
 
-### 4. Simple Single-Turn Eval (2 minutes)
-**Demo**: Show `2-simple/` example
-
-- **Dataset**: `dataset.csv` with geography questions
-- **Suite**: `suite.yaml` configuration
-  - Target: Uses qa_agent.af
-  - Extractor: `last_assistant` (gets agent's final text response)
-  - Grader: `tool` with `contains` function (string matching)
-  - Gate: Require 67% pass rate
-
-**Run the eval**: `letta-evals run suite.yaml`
-- Show real-time progress
-- Show results summary
-
-**Key Points**:
-- Extractors: `last_assistant`, `all_assistant`, `last_turn`, `tool_output`, `memory_block`
-- Tool graders: `contains`, `exact_match` (fast, deterministic)
-- Gates define pass/fail criteria
-
-### 5. Rubric Grader with Letta Agent as Judge (2 minutes)
-**Demo**: Show `3-rubric/` example
-
-- **Why rubric grading?**
-  - Need nuanced evaluation
-  - String matching too rigid
-  - Want to grade quality, not just correctness
-
-- **Letta Agent as Judge**:
-  - Uses `letta_judge` grader type
-  - No direct LLM API keys needed
-  - Can use tools during evaluation
-  - More flexible than simple LLMs
-
-- **Rubric**: `rubric.txt`
-  - Template with variables: `{input}`, `{output}`, `{ground_truth}`
-  - Custom evaluation criteria
-  - Scoring guidelines
-
-**Run the eval**: `letta-evals run suite.yaml`
-
-**Key Points**:
-- `letta_judge` vs `model_judge`
-- Rubric variables
-- Scoring guidelines (0.0 to 1.0)
-
-### 6. Multi-Turn Conversations (2 minutes)
-**Demo**: Show `4-multiturn/` example
-
-- **Why multi-turn?**
-  - Test memory across conversation
-  - Test state persistence
-  - Real conversation patterns
-
-- **Dataset**: `dataset.jsonl` (JSONL not CSV)
-  - `input` is a list of strings
-  - Each string sent sequentially
-
-- **Memory Block Extractor**:
-  - Extract from agent's memory instead of response
-  - Check if agent updated memory correctly
-
-- **Agent**: `memory_agent.af`
-  - Has `user_preferences` memory block
-  - Stores information across turns
-
-**Run the eval**: `letta-evals run suite.yaml`
-
-**Key Points**:
-- Multi-turn input format
-- Memory block extractor
-- Testing state evolution
-
-### 7. Wrap Up (30 seconds)
-- Recap the four key areas covered
-- Where to learn more:
-  - GitHub: github.com/letta-ai/letta-evals
-  - Docs: docs.letta.com/evals
-  - Examples: examples/ directory
-- Encourage viewers to try it themselves
-
----
-
-## Demo Directory Structure
+### Directory Structure
 
 ```
-demo/
-├── README.md (this file)
-├── 1-agentfile/       # What is an agent file?
+.
+├── 1-agentfile/       # Introduction to agent files
 │   ├── qa_agent.af
 │   └── README.md
-├── 2-simple/          # Simple single-turn with tool grader
+├── 2-simple/          # Simple single-turn evaluation with tool grader
 │   ├── dataset.csv
 │   ├── suite.yaml
 │   └── README.md
-├── 3-rubric/          # Rubric grading with Letta agent as judge
+├── 3-rubric/          # Rubric-based grading with Letta agent as judge
 │   ├── dataset.csv
 │   ├── rubric.txt
 │   ├── suite.yaml
 │   └── README.md
-└── 4-multiturn/       # Multi-turn with memory block extractor
+└── 4-multiturn/       # Multi-turn conversations with memory testing
     ├── dataset.jsonl
     ├── memory_agent.af
     ├── suite.yaml
     └── README.md
 ```
 
-## Running the Demos
+### Examples Overview
 
-Prerequisites:
-1. Letta server running: `letta server`
-2. Letta Evals installed: `pip install letta-evals`
+**1. Agent Files**: Learn about Letta's agent file format (.af), which stores complete agent snapshots including configuration, tools, memory blocks, and message history.
 
-Run each demo:
+**2. Simple Evaluation**: Basic single-turn Q&A testing using tool-based grading (string matching) to verify correct answers.
+
+**3. Rubric Grading**: Advanced evaluation using a Letta agent as judge to grade qualitative responses based on custom rubrics.
+
+**4. Multi-Turn Testing**: Test memory persistence across multiple conversation turns, verifying agents remember information correctly.
+
+## Prerequisites
+
+1. **Python 3.10+** (use [uv](https://docs.astral.sh/uv/) for package management)
+2. **Letta server**: Install and run Letta
+   ```bash
+   pip install letta
+   letta server
+   ```
+3. **Letta Evals**: Install the evaluation framework
+   ```bash
+   pip install letta-evals
+   ```
+
+## Running the Examples
+
+Each example can be run independently. Navigate to the example directory and execute:
+
 ```bash
-cd 2-simple && letta-evals run suite.yaml
-cd ../3-rubric && letta-evals run suite.yaml
-cd ../4-multiturn && letta-evals run suite.yaml
+# Simple single-turn evaluation
+cd 2-simple
+letta-evals run suite.yaml
+
+# With output saved to results directory
+letta-evals run suite.yaml --output results
+
+# Rubric-based grading
+cd ../3-rubric
+letta-evals run suite.yaml --output results
+
+# Multi-turn memory testing
+cd ../4-multiturn
+letta-evals run suite.yaml --output results
 ```
 
-## Tips for Video Recording
+Each example includes a README with detailed explanations.
 
-1. **Start simple**: Begin with agent files, then build up
-2. **Show code**: Display the YAML and dataset files
-3. **Run live**: Execute the evals and show results
-4. **Explain as you go**: Walk through each component
-5. **Keep it focused**: ~8-10 minutes total
+## Key Features Demonstrated
+
+- **Tool-based grading**: Fast, deterministic evaluation using functions like `contains` and `exact_match`
+- **Rubric grading**: Nuanced qualitative evaluation using LLMs or Letta agents as judges
+- **Multi-turn conversations**: Testing state persistence and memory across conversation turns
+- **Memory block extraction**: Verifying agents store and retrieve information correctly
+- **Agent replication**: Creating multiple agent instances from a single agent file for parallel testing
+
+## Learn More
+
+- **Documentation**: [docs.letta.com/evals](https://docs.letta.com/evals)
+- **Main Repository**: [github.com/letta-ai/letta-evals](https://github.com/letta-ai/letta-evals)
+- **Letta Framework**: [github.com/letta-ai/letta](https://github.com/letta-ai/letta)
+- **Community**: [discord.gg/letta](https://discord.gg/letta)
+
+## Advanced Use Cases
+
+Letta Evals supports sophisticated workflows:
+
+- **CI/CD Integration**: Use gates to block deployments if agents regress
+- **Agent Training**: Repeatedly evaluate the same agent ID to help it learn
+- **Teacher-Student Patterns**: Use specialized judge agents that improve over time
+- **Custom Extractors**: Write custom functions to extract any data from agent responses
+- **Batch Evaluation**: Run thousands of evaluations in parallel
+
+See the [examples directory](https://github.com/letta-ai/letta-evals/tree/main/examples) in the main Letta Evals repository for more advanced patterns.
